@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "first_name": "Carol",
+        "last_name": "MacGilrewy",
+        "email": "cmacgilrewy6@amazon.de",
+        "gender": "Female",
+        "job_title": "Geologist III"
+      },
+      {
+        "id": 2,
+        "first_name": "Willetta",
+        "last_name": "Entissle",
+        "email": "wentissle7@google.ca",
+        "gender": "Female",
+        "job_title": "Developer IV"
+      },
+      {
+        "id": 3,
+        "first_name": "Wilbert",
+        "last_name": "Leer",
+        "email": "wleer8@icio.us",
+        "gender": "Male",
+        "job_title": "Associate Professor"
+      }
+]
