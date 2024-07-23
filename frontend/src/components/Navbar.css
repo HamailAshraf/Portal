@@ -1,0 +1,83 @@
+/* Ensure that the menu container covers the entire viewport */
+.navbar-menu-container {
+    position: fixed; /* Fix it to the viewport */
+    top: 0;
+    left: 0;
+    width: 250px; /* Adjust width as needed */
+    height: 100vh; /* Full height of the viewport */
+    background: #fff; /* Set background to white */
+    border-radius: 0 0 0 20px; /* Rounded corners on the left side */
+    box-shadow: 0 0 10px rgba(0,0,0,0.2); /* Slight shadow for depth */
+    z-index: 9999; /* Make sure it is above other content */
+    transform: translateX(-100%); /* Hide off-screen by default */
+    transition: transform 0.3s ease-in-out; /* Smooth transition for slide effect */
+}
+
+/* Active class to slide the menu into view */
+.navbar-menu-container.active {
+    transform: translateX(0); /* Move menu into view */
+}
+
+/* Styling for the menu items */
+.navbar-menu_container p {
+    color: #000; /* Change text color to black for better readability */
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25px;
+    text-transform: capitalize;
+    margin: 0 1rem;
+    cursor: pointer;
+}
+
+/* Hover effect for menu items */
+.navbar-sign p:hover {
+    font-size: 19px;
+    transition: 0.1s;
+}
+
+/* Styling for buttons inside the menu */
+.navbar-sign button,
+.navbar-menu_container button {
+    padding: 0.5rem 1rem;
+    color: #fff;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25px;
+    background: #FF4820;
+    border-radius: 5px;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+}
+
+/* Styling for the burger menu */
+.navbar-menu {
+    margin-right: 1rem;
+    display: flex; /* Make sure this is visible for the burger icon */
+    align-items: center; /* Align vertically */
+}
+
+.navbar-menu svg {
+    cursor: pointer;
+}
+
+/* Container for links and sign buttons */
+.navbar-menu_container-links-sign {
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* Ensure it takes up full width */
+    padding: 2rem;
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+/* Styling for the close button within the menu */
+.navbar-menu_container .close-btn {
+    position: absolute;
+    top: 1rem; /* Distance from the top */
+    right: 1rem; /* Distance from the right */
+    cursor: pointer;
+    font-size: 24px; /* Adjust size for visibility */
+    color: #000; /* Ensure it's visible against the white background */
+}

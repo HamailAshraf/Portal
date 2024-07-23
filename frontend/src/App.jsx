@@ -8,12 +8,15 @@ import './App.css';
 import { UserContextProvider } from './context/UserContextProvider';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { Welcome } from './pages/Welcome';
+import {Patch} from './components/Patch';
+
 //import { AddTask } from './pages/AddTask';
 // import { NavbarAdmin } from './components/NavbarAdmin';
 // import { Navbar } from './components/Navbar';
 //import { AuthGuard } from './pages/PrivateRoute';
 import LogedInAdmin from './pages/LogedInAdmin';
 import LogedIn from './pages/LogedIn';
+import { PieChart } from './components/PieCHar';
 
 const App = () => {
   // const {role} = useContext(UserContext);
@@ -52,10 +55,26 @@ return (
           } 
         />
         <Route 
+          path="/patch/:id" 
+          element={
+            // <AuthGuard>
+              <Patch />
+            // </AuthGuard>
+          } 
+        />
+        <Route 
           path="/loggedinuser" 
           element={
             // <AuthGuard>
               <LogedIn />
+            // </AuthGuard>
+          } 
+        />
+        <Route 
+          path="/piechart" 
+          element={
+            // <AuthGuard>
+              <PieChart />
             // </AuthGuard>
           } 
         />

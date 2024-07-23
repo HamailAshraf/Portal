@@ -4,6 +4,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import Axios from 'axios';
 import { Pie } from 'react-chartjs-2';
 import { UserContext } from '../context/UserContext';
+import { Navbar } from './Navbar';
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
@@ -92,12 +93,15 @@ export const PieChart = () => {
   };
 
   return (
+    <div className='bg-blue-100 h-screen'>
+    <Navbar />
     <div>
       <Pie
         data={data}
         height={400}
         options={options}
       />
+      </div>
     </div>
   );
 };

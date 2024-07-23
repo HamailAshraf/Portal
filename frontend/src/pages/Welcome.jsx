@@ -11,7 +11,7 @@ export const Welcome = () => {
   const { register, handleSubmit } = useForm();
  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const {setToken, role, setRole, setId, token } = useContext(UserContext);
+  const {setToken, setRole, setId, token } = useContext(UserContext);
   const navigate = useNavigate();
   //const [role, setRole] = useState(0);
   console.log("Token on Welcome: ", token);
