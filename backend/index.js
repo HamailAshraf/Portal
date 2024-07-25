@@ -378,7 +378,7 @@ app.get('/users/completedcount', authenticateToken, (req, res) => {
 // });
 
 app.route('/users/:name')
-    .get(authenticateToken, (req, res) => { // Protecting the route
+    .get(authenticateToken, (req, res) => { 
         const name = req.params.name;
         const sql = `SELECT * FROM users WHERE name LIKE '%${name}%'`;
         db.query(sql, (err, data) => {
@@ -388,7 +388,7 @@ app.route('/users/:name')
     });
 
 app.route('/users/:id')
-    .get(authenticateToken, (req, res) => { // Protecting the route
+    .get(authenticateToken, (req, res) => { 
         const id = Number(req.params.id);
         const sql = `SELECT * FROM users WHERE id = ${id}`;
         db.query(sql, (err, data) => {
@@ -396,7 +396,7 @@ app.route('/users/:id')
             return res.json(data);
         });
     })
-    .patch(authenticateToken, authorizeAdmin, (req, res) => { // Protecting the route
+    .patch(authenticateToken, authorizeAdmin, (req, res) => { 
         const id = Number(req.params.id);
         const updatedData = req.body;
         const sql = `UPDATE users SET ? WHERE id = ?`;
@@ -406,17 +406,96 @@ app.route('/users/:id')
             return res.json({ status: "success", message: "User updated successfully" });
         });
     })
-    .delete(authenticateToken, authorizeAdmin, (req, res) => { // Protecting the route
+    .delete(authenticateToken, authorizeAdmin, (req, res) => { 
         const id = Number(req.params.id);
-        const sql = `DELETE FROM users WHERE id = ?`;
-
-        db.query(sql, [id], (err, result) => {
-            if (err) return res.status(500).json({ status: "error", message: "Failed to delete user data" });
-            return res.json({ status: "success", message: "User deleted successfully" });
+        console.log("delete server id: ", id);
+    
+        if (isNaN(id)) {
+            return res.status(400).json({ status: "error", message: "Invalid user ID" });
+        }
+    
+        // Start a transaction
+        db.beginTransaction((err) => {
+            if (err) {
+                console.error('Transaction error:', err);
+                return res.status(500).json({ status: "error", message: "Transaction error" });
+            }
+    
+            // Delete related tasks first
+            const deleteTasksSql = `DELETE FROM tasks WHERE userid = ?`;
+            db.query(deleteTasksSql, [id], (err, result) => {
+                if (err) {
+                    console.error('Error deleting related tasks:', err);
+                    return db.rollback(() => {
+                        res.status(500).json({ status: "error", message: "Failed to delete related tasks" });
+                    });
+                }
+    
+                // Now delete the user
+                const deleteUserSql = `DELETE FROM users WHERE id = ?`;
+                db.query(deleteUserSql, [id], (err, result) => {
+                    if (err) {
+                        console.error('Error deleting user:', err);
+                        return db.rollback(() => {
+                            res.status(500).json({ status: "error", message: "Failed to delete user data" });
+                        });
+                    }
+    
+                    if (result.affectedRows === 0) {
+                        return db.rollback(() => {
+                            res.status(404).json({ status: "error", message: "User not found" });
+                        });
+                    }
+    
+                    // Commit the transaction
+                    db.commit((err) => {
+                        if (err) {
+                            console.error('Commit error:', err);
+                            return db.rollback(() => {
+                                res.status(500).json({ status: "error", message: "Commit error" });
+                            });
+                        }
+    
+                        return res.json({ status: "success", message: "User deleted successfully" });
+                    });
+                });
+            });
         });
     });
+    // .delete(authenticateToken, authorizeAdmin, (req, res) => { 
+    //     const id = Number(req.params.id);
+    //     console.log("delete server id: ", id);
+    
+    //     if (isNaN(id)) {
+    //         return res.status(400).json({ status: "error", message: "Invalid user ID" });
+    //     }
+    
+    //     const sql = `DELETE FROM users WHERE id = ?`;
+    
+    //     db.query(sql, [id], (err, result) => {
+    //         if (err) {
+    //             console.error('Error deleting user:', err);
+    //             return res.status(500).json({ status: "error", message: "Failed to delete user data" });
+    //         }
+    
+    //         if (result.affectedRows === 0) {
+    //             return res.status(404).json({ status: "error", message: "User not found" });
+    //         }
+    
+    //         return res.json({ status: "success", message: "User deleted successfully" });
+    //     });
+    // });
+    // .delete(authenticateToken, authorizeAdmin, (req, res) => { 
+    //     const id = Number(req.params.id);
+    //     const sql = `DELETE FROM users WHERE id = ?`;
 
-app.post("/users", authenticateToken, authorizeAdmin, (req, res) => { // Protecting the route
+    //     db.query(sql, [id], (err, result) => {
+    //         if (err) return res.status(500).json({ status: "error", message: "Failed to delete user data" });
+    //         return res.json({ status: "success", message: "User deleted successfully" });
+    //     });
+    // });
+
+app.post("/users", authenticateToken, authorizeAdmin, (req, res) => { 
     const newUser = req.body;
     const sql = `INSERT INTO users SET ?`;
 

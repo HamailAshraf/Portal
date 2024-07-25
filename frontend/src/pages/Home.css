@@ -32,3 +32,81 @@
   .firstname:hover{
     color: #7f7785;
   }
+
+  /* .datatableContainer{
+    display: flex;
+    justify-content: center;
+  }
+  .col{
+    height: 12vh;
+  }
+  .datatable{
+    width: 90%;
+    border: solid black;
+    border-radius: 12px;
+  } */
+
+  /* .custom-datatable {
+    display: flex;
+    justify-content: center;
+  } */
+  .datatableContainer {
+    overflow: hidden; /* Ensure the table container has rounded corners */
+    border-radius: 8px;
+    display: flex;
+    justify-content: center; /* Adjust as needed for rounded corners */
+  }
+  
+  .custom-datatable {
+    border-radius: 8px; /* Apply rounded corners to the table itself */
+    overflow: hidden;
+    width: 90%; /* Ensure the content fits within the rounded corners */
+  }
+  
+  .custom-datatable .p-datatable-thead > tr > th:first-child {
+    border-top-left-radius: 8px; /* Rounded corner for the top-left cell */
+  }
+  
+  .custom-datatable .p-datatable-thead > tr > th:last-child {
+    border-top-right-radius: 8px; /* Rounded corner for the top-right cell */
+  }
+  
+  .custom-datatable .p-datatable-tbody > tr:last-child > td:first-child {
+    border-bottom-left-radius: 8px; /* Rounded corner for the bottom-left cell */
+  }
+  
+  .custom-datatable .p-datatable-tbody > tr:last-child > td:last-child {
+    border-bottom-right-radius: 8px; /* Rounded corner for the bottom-right cell */
+  }
+
+  .warning{
+    font-size: 20px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
+
+  .btnContainer{
+    margin-top: 6px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .yesbtn {
+    color: white;
+    background-color: red;
+    padding: 6px;
+    width: 60px;
+    border-radius: 4px;
+    margin-right: 4px;
+  }
+
+  .nobtn{
+    color: white;
+    background-color: green;
+    padding: 6px;
+    width: 60px;
+    border-radius: 4px;
+    margin-left: 4px;
+  }
+
+  

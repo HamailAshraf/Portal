@@ -1,18 +1,21 @@
+/* eslint-disable react/prop-types */
 // Patch.jsx
 import { useForm } from 'react-hook-form';
 import Axios from 'axios';
 import { useContext, useEffect } from 'react';
 import { UserContext } from '../context/UserContext';
-import { useParams } from 'react-router-dom';
+//import { useParams } from 'react-router-dom';
 
-export const Patch = () => {
+export const Patch = ({user}) => {
     const { register, handleSubmit, setValue } = useForm();
     const { token } = useContext(UserContext);
-    const { id } = useParams();
+   // const { id } = useParams();
 
     useEffect(() => {
-        setValue("id", id); 
-    }, [id, setValue]);
+        if(user){
+            setValue("id", user.id); 
+        }
+    }, [user, setValue]);
 
     const onSubmit = async (data) => {
         try {

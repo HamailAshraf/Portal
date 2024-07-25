@@ -4,6 +4,7 @@ import Axios from 'axios';
 
 export const deleteUser = async (id, token) => {
   try {
+    console.error("The id recieved by delete is: ", id);
     const response = await Axios.delete(`http://localhost:3000/users/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,

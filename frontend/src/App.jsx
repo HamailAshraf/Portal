@@ -8,7 +8,7 @@ import './App.css';
 import { UserContextProvider } from './context/UserContextProvider';
 import {BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom';
 import { Welcome } from './pages/Welcome';
-import {Patch} from './components/Patch';
+//import {Patch} from './components/Patch';
 
 //import { AddTask } from './pages/AddTask';
 // import { NavbarAdmin } from './components/NavbarAdmin';
@@ -65,14 +65,14 @@ return (
             // </AuthGuard>
           } 
         />
-        <Route 
+        {/* <Route 
           path="/patch/:id" 
           element={
             // <AuthGuard>
               <Patch />
             // </AuthGuard>
           } 
-        />
+        /> */}
         <Route 
           path="/loggedinuser" 
           element={
