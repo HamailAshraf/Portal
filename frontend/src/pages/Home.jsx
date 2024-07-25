@@ -10,6 +10,10 @@ import './Home.css';
 
 export const Home = () => {
     const [data, setData] = useState([]);
+    const [firstSort, setFirstSort] = useState(false);
+    const [lastSort, setLastSort] = useState(false);
+    const [dataSort, setDataSort] = useState(true);
+
     const [totalPages, setTotalPages] = useState(0);
     const { token } = useContext(UserContext);
     const navigate = useNavigate();
@@ -18,30 +22,28 @@ export const Home = () => {
     const [pageNumber, setPageNumber] = useState(0);
     const usersPerPage = 5;
 
-    const fetchData = async (pageNumber = 0) => {
+    const fetchData = async (pageNumber = 0, sortBy = '') => {
         try {
             if (!token) {
                 console.error("No token found");
                 return;
             }
-            const response = await Axios.get(`http://localhost:3000/users/paginated?page=${pageNumber + 1}&limit=${usersPerPage}`, {
+            const response = await Axios.get(`http://localhost:3000/users/paginated${sortBy ? `/${sortBy}` : ''}?page=${pageNumber + 1}&limit=${usersPerPage}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
-            console.log("Token in try: ", token);
             setData(response.data.items);
             setTotalPages(response.data.totalPages);
         } catch (error) {
             console.log("Error fetching data: ", error.message);
-            console.log("Token in error: ", token);
         }
     };
 
     const handleDelete = async (id) => {
         try {
             await deleteUser(id, token);
-            fetchData(pageNumber);
+            fetchData(pageNumber, getSortParam());
         } catch (error) {
             console.log("Error deleting user: ", error.message);
         }
@@ -50,7 +52,7 @@ export const Home = () => {
     const handleSearch = async (formData) => {
         try {
             if (!formData.name || formData.name.length < 3) {
-                fetchData();
+                fetchData(pageNumber, getSortParam());
                 return;
             }
             const userData = await getSearch(formData.name, token);
@@ -61,11 +63,29 @@ export const Home = () => {
         }
     };
 
+    const toggleFirstName = () => {
+        setDataSort(false);
+        setLastSort(false);
+        setFirstSort(!firstSort);
+    };
+
+    const toggleLastName = () => {
+        setDataSort(false);
+        setFirstSort(false);
+        setLastSort(!lastSort);
+    };
+
+    const getSortParam = () => {
+        if (firstSort) return 'first_name';
+        if (lastSort) return 'last_name';
+        return '';
+    };
+
     useEffect(() => {
         if (token) {
-            fetchData(pageNumber);
+            fetchData(pageNumber, getSortParam());
         }
-    }, [token, pageNumber]);
+    }, [token, pageNumber, firstSort, lastSort, dataSort]);
 
     const changePage = ({ selected }) => {
         setPageNumber(selected);
@@ -114,8 +134,8 @@ export const Home = () => {
                     <thead className="text-xs w-full text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th className="px-6 py-3">ID</th>
-                            <th className="px-6 py-3">First Name</th>
-                            <th className="px-6 py-3">Last Name</th>
+                            <th className="px-6 py-3"><button className='firstname' onClick={toggleFirstName}>FIRST NAME</button></th>
+                            <th className="px-6 py-3"><button className='lastname' onClick={toggleLastName}>LAST NAME</button></th>
                             <th className="px-6 py-3">Email</th>
                             <th className="px-6 py-3">Gender</th>
                             <th className="px-6 py-3">Job Title</th>
@@ -141,7 +161,6 @@ export const Home = () => {
         </div>
     );
 };
-
 
 // export const Home = () => {
 //     //const [data] = CustomReactQuery('/api/users');

@@ -25,3 +25,10 @@
     background-color: #2b2eff;
   }
   
+  .lastname:hover{
+    color: #7f7785;
+  }
+
+  .firstname:hover{
+    color: #7f7785;
+  }

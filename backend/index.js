@@ -97,6 +97,65 @@ app.get('/users/paginated', authenticateToken, (req, res) => {
     });
 });
 
+app.get('/users/paginated/first_name', authenticateToken, (req, res) => {
+    let page = parseInt(req.query.page) || 1;
+    let limit = parseInt(req.query.limit) || 5;
+    let offset = (page - 1) * limit;
+
+    let sql = 'SELECT * FROM users ORDER BY first_name LIMIT ? OFFSET ?';
+    db.query(sql, [limit, offset], (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+
+        db.query('SELECT COUNT(*) AS count FROM users', (err, countResults) => {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+
+            let totalItems = countResults[0].count;
+            let totalPages = Math.ceil(totalItems / limit);
+
+            res.json({
+                page,
+                totalPages,
+                totalItems,
+                items: results
+            });
+        });
+    });
+});
+
+app.get('/users/paginated/last_name', authenticateToken, (req, res) => {
+    let page = parseInt(req.query.page) || 1;
+    let limit = parseInt(req.query.limit) || 5;
+    let offset = (page - 1) * limit;
+
+    let sql = 'SELECT * FROM users ORDER BY last_name LIMIT ? OFFSET ?';
+    db.query(sql, [limit, offset], (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+
+        db.query('SELECT COUNT(*) AS count FROM users', (err, countResults) => {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+
+            let totalItems = countResults[0].count;
+            let totalPages = Math.ceil(totalItems / limit);
+
+            res.json({
+                page,
+                totalPages,
+                totalItems,
+                items: results
+            });
+        });
+    });
+});
+
+
 app.get("/users/tasksshow", authenticateToken, authorizeAdmin, (req, res) => {
     const sql = `SELECT u.id, u.name, t.task_name FROM users u LEFT JOIN tasks t ON u.id = t.userid WHERE u.role_id = 2 AND t.task_name = ''`; // WHERE t.task_name = ''`;
     db.query(sql, (err, data) => {

@@ -11,7 +11,7 @@
 
   .homeContainer{
     background-color: black;
-    height: 60px;
+    height: 65px;
     display: flex;
     justify-content: end;
   }
