@@ -5,6 +5,7 @@ import Axios from 'axios';
 import { Pie } from 'react-chartjs-2';
 import { UserContext } from '../context/UserContext';
 import { Navbar } from './Navbar';
+import { BarGraph } from './BarGraph';
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
@@ -23,6 +24,7 @@ export const PieChart = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log('API response:', response.data);
       setChart(response.data);
     } catch (error) {
       console.log("Error fetching data: ", error.message);
@@ -101,6 +103,9 @@ export const PieChart = () => {
         height={400}
         options={options}
       />
+      </div>
+      <div>
+        <BarGraph />
       </div>
     </div>
   );

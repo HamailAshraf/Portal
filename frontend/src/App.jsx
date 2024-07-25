@@ -6,7 +6,7 @@ import './App.css';
 //import { Delete } from './components/Delete';
 // import { useContext } from 'react';
 import { UserContextProvider } from './context/UserContextProvider';
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom';
 import { Welcome } from './pages/Welcome';
 import {Patch} from './components/Patch';
 
@@ -17,6 +17,7 @@ import {Patch} from './components/Patch';
 import LogedInAdmin from './pages/LogedInAdmin';
 import LogedIn from './pages/LogedIn';
 import { PieChart } from './components/PieCHar';
+
 
 const App = () => {
   // const {role} = useContext(UserContext);
@@ -46,6 +47,11 @@ return (
             <Welcome />
           } 
           />
+          <Route path="/" element={(<div>
+            <h1>Welcome to Home Page.</h1>
+              {/* {!token && (<Link to='/login'>Login</Link>)} */}
+              <Link to='/login'>Login</Link>
+          </div>)}/>
         <Route 
           path="/loggedinadmin" 
           element={
