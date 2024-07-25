@@ -47,11 +47,16 @@ return (
             <Welcome />
           } 
           />
-          <Route path="/" element={(<div>
-            <h1>Welcome to Home Page.</h1>
+          <Route path="/" element={(
+            <><div className='homeContainer'>
+              <Link to='/login' className='loginLink'>Login</Link>
+  
               {/* {!token && (<Link to='/login'>Login</Link>)} */}
-              <Link to='/login'>Login</Link>
-          </div>)}/>
+          </div><div className='welcomeContainer'>
+          <h1 className='welcome'>Welcome to Home Page.</h1>
+          </div>
+          </>
+          )}/>
         <Route 
           path="/loggedinadmin" 
           element={

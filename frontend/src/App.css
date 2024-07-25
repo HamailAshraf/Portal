@@ -8,3 +8,49 @@
     scroll-behavior: smooth;
     background: #fff;
   }
+
+  .homeContainer{
+    background-color: black;
+    height: 60px;
+    display: flex;
+    justify-content: end;
+  }
+
+  .loginLink{
+    color: white;
+    padding-left: 10px;
+    padding-top: 3px;
+    margin: 15px;
+    border-radius: 4px;
+    border-color: white;
+    border: solid;
+    border-width: 2px;
+    width: 64px;
+    height: 35px;
+  }
+
+  .loginLink:hover {
+    color: black;
+    background-color: white;
+  }
+
+  .welcomeContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    background-color: #f0f0f0;
+  }
+
+  .welcome{
+    text-align: center;
+    font-size: 3rem;
+    color: #333;
+    font-family: 'Arial', sans-serif; 
+    padding: 20px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #ebeeee, #accac3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    text-transform: uppercase;
+    
+  }
