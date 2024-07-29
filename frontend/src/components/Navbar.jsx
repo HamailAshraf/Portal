@@ -26,7 +26,7 @@ export const Navbar = () => {
           className='cursor-pointer'
         />
       )}
-      <h1 className='text-white ml-4'>Portal Logo</h1>
+      <h1 className='text-white ml-4 logo' onClick={() => navigate('/loggedinadmin')}>Portal Logo</h1>
     </div>
     <div className='flex items-center'>
       <Logout />
